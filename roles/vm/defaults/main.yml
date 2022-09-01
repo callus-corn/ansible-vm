@@ -1,0 +1,8 @@
+---
+
+xml_dir: /mnt/local-ssd/xml
+kvm_qcow_dir: /mnt/local-ssd/image
+
+docker_build_memory_KiB: 2097152
+docker_build_vcpu: 1
+docker_build_qcow_dir: "{{ kvm_qcow_dir }}"

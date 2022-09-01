@@ -1,0 +1,13 @@
+---
+- name: setup vm
+  hosts: kvm
+  become: yes
+  tasks:
+
+    - name: start docker-build
+      import_role:
+        name: vm
+      vars:
+        vm_action: start
+        target: docker-build
+      tags: start_docker_build

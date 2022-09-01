@@ -1,0 +1,19 @@
+---
+
+- name: set xml
+  template:
+    src: "{{ target }}.xml.j2"
+    dest: "{{ xml_dir }}/{{ target }}.xml"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: define vm
+  command: >-
+    virsh define {{ xml_dir }}/{{ target }}.xml
+  changed_when: true
+
+- name: start vm
+  command: >-
+    virsh start {{ target }}
+  changed_when: true
