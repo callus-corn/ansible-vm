@@ -1,13 +1,13 @@
 ---
-- name: setup vm
+- name: destroy vm
   hosts: kvm
   become: yes
   tasks:
 
-    - name: start docker-build
+    - name: destory docker-build
       import_role:
         name: vm
       vars:
-        vm_action: start
+        vm_action: destroy
         target: docker-build
-      tags: start_docker_build
+      tags: destroy_docker_build

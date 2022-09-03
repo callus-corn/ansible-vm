@@ -1,6 +1,6 @@
 <domain type='kvm'>
   <name>docker-build</name>
-  <uuid>8e3d33c8-2ba0-4201-9646-270929e85a60</uuid>
+  <uuid>{{ docker_build_uuid }}</uuid>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://rockylinux.org/rocky/9.0"/>
@@ -34,7 +34,7 @@
     <emulator>/usr/libexec/qemu-kvm</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2'/>
-      <source file='{{ docker_build_qcow_dir }}/docker-build.qcow2'/>
+      <source file='{{ qcow_dir }}/docker-build.qcow2'/>
       <target dev='vda' bus='virtio'/>
       <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
     </disk>
@@ -84,7 +84,7 @@
       <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
     </controller>
     <interface type='bridge'>
-      <mac address='52:54:00:10:52:fe'/>
+      <mac address='{{ docker_build_mac }}'/>
       <source bridge='br0'/>
       <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>

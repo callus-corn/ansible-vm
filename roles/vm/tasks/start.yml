@@ -1,5 +1,10 @@
 ---
 
+- name: create qcow2
+  command: >-
+    cp {{ qcow_dir }}/{{ src_image }}.qcow2 {{ qcow_dir }}/{{ target }}.qcow2
+  when: src_image is defined
+
 - name: set xml
   template:
     src: "{{ target }}.xml.j2"

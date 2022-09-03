@@ -1,0 +1,21 @@
+---
+
+- name: destroy vm
+  command: >-
+    virsh destroy {{ target }}
+  changed_when: true
+
+- name: undefine vm
+  command: >-
+    virsh undefine {{ target }}
+  changed_when: true
+
+- name: destory qcow2
+  file:
+    path: "{{ qcow_dir }}/{{ target }}.qcow2"
+    state: absent
+
+- name: destory xml
+  file:
+    path: "{{ xml_dir }}/{{ target }}.xml"
+    state: absent
