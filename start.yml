@@ -4,6 +4,11 @@
   become: yes
   tasks:
 
+    - name: setup dhcpd
+      import_role:
+        name: dhcpd
+      tags: setup_dhcpd
+
     - name: start docker-build
       import_role:
         name: vm
