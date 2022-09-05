@@ -1,14 +1,14 @@
 <domain type='kvm'>
-  <name>docker-build</name>
-  <uuid>{{ docker_build_uuid }}</uuid>
+  <name>develop</name>
+  <uuid>{{ develop_uuid }}</uuid>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://rockylinux.org/rocky/9.0"/>
     </libosinfo:libosinfo>
   </metadata>
-  <memory unit='KiB'>{{ docker_build_memory_KiB }}</memory>
-  <currentMemory unit='KiB'>{{ docker_build_memory_KiB }}</currentMemory>
-  <vcpu placement='static'>{{ docker_build_vcpu }}</vcpu>
+  <memory unit='KiB'>{{ develop_memory_KiB }}</memory>
+  <currentMemory unit='KiB'>{{ develop_memory_KiB }}</currentMemory>
+  <vcpu placement='static'>{{ develop_vcpu }}</vcpu>
   <os>
     <type arch='x86_64' machine='pc-q35-rhel9.0.0'>hvm</type>
     <boot dev='hd'/>
@@ -84,7 +84,7 @@
       <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
     </controller>
     <interface type='bridge'>
-      <mac address='{{ docker_build_mac }}'/>
+      <mac address='{{ develop_mac }}'/>
       <source bridge='br0'/>
       <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>

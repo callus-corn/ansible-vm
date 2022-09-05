@@ -4,10 +4,10 @@
   become: yes
   tasks:
 
-    - name: destory docker-build
+    - name: destory develop
       import_role:
         name: vm
       vars:
         vm_action: destroy
-        target: docker-build
-      tags: destroy_docker_build
+        target: develop
+      tags: destroy_develop
