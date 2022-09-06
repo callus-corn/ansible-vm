@@ -1,0 +1,43 @@
+---
+
+- name: create /etc/pdns-recursor
+  file:
+    path: /etc/pdns-recursor
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: set /etc/pdns-recursor/recursor.conf
+  template:
+    src: recursor.conf.j2
+    dest: /etc/pdns-recursor/recursor.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: create /var/zones
+  file:
+    path: /var/zones
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: set /var/zones/localdomain
+  template:
+    src: localdomain.j2
+    dest: /var/zones/localdomain
+    owner: root
+    group: root
+    mode: 0644
+
+- name: set port 53
+  command: >-
+    firewall-cmd --add-port=53/udp --zone=public --permanent
+  changed_when: true
+
+- name: firewall restart
+  command: >-
+    firewall-cmd --reload
+  changed_when: true

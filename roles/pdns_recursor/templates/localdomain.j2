@@ -1,0 +1,13 @@
+$TTL 3600
+$ORIGIN localdomain.
+@ IN SOA kvm root (
+        20210906
+        3600
+        900
+        604800
+        900
+    )
+kvm IN A 192.168.1.100
+{% for vm in kvm_vm_list %}
+{{ vm.name }} IN A {{ vm.ip }}
+{% endfor %}

@@ -1,14 +1,22 @@
 ---
 
+- name: check vm_list
+  command: >-
+    virsh list
+  register: vm_list
+  changed_when: false
+
 - name: destroy vm
   command: >-
     virsh destroy {{ target }}
   changed_when: true
+  when: target in vm_list.stdout
 
 - name: undefine vm
   command: >-
     virsh undefine {{ target }}
   changed_when: true
+  when: target in vm_list.stdout
 
 - name: destory qcow2
   file:

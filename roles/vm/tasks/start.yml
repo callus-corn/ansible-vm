@@ -1,24 +1,40 @@
 ---
 
+- name: check virsh list
+  command: >-
+    virsh list
+  register: vm_list
+  changed_when: false
+
 - name: create qcow2
   command: >-
     cp {{ qcow_dir }}/{{ src_image }}.qcow2 {{ qcow_dir }}/{{ target }}.qcow2
-  when: src_image is defined
+  when:
+    - target not in vm_list.stdout
+    - src_image is defined
 
 - name: set xml
   template:
-    src: "{{ target }}.xml.j2"
+    src: "vm.xml.j2"
     dest: "{{ xml_dir }}/{{ target }}.xml"
     owner: root
     group: root
     mode: 0644
+  vars:
+    target_data: "{{ (kvm_vm_list | selectattr('name', 'eq', target) | list)[0] }}"
+  when:
+    - target not in vm_list.stdout
 
 - name: define vm
   command: >-
     virsh define {{ xml_dir }}/{{ target }}.xml
   changed_when: true
+  when:
+    - target not in vm_list.stdout
 
 - name: start vm
   command: >-
     virsh start {{ target }}
   changed_when: true
+  when:
+    - target not in vm_list.stdout
