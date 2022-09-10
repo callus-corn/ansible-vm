@@ -1,6 +1,0 @@
----
-
-- name: install dhcpd
-  dnf:
-    name: dhcp-server
-    state: latest

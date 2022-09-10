@@ -4,32 +4,22 @@
   become: yes
   tasks:
 
-    - name: setup dns resolver
-      import_role:
-        name: pdns_recursor
-      tags:
-        - setup
-        - setup_pdns_recursor
-
-    - name: setup dhcpd
-      import_role:
-        name: dhcpd
-      tags:
-        - setup
-        - setup_dhcpd
-
-    - name: start develop
-      import_role:
+    - name: start develop vm
+      include_role:
         name: vm
       vars:
         vm_action: start
         src_image: rocky9
-        target: develop
+        target: "{{ item }}"
+      loop: "{{ vm_list }}"
+      when: item.meta.label == "develop"
       tags: start_develop
 
     - name: Waits for develop
-      ansible.builtin.wait_for:
-        host: "{{ (kvm_vm_list | selectattr('name', 'eq', 'develop') | list)[0].ip }}"
+      wait_for:
+        host: "{{ item.ip }}"
         port: 22
         delay: 10
+      loop: "{{ vm_list }}"
+      when: item.meta.label == "develop"
       tags: health_check_develop

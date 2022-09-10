@@ -1,14 +1,14 @@
 <domain type='kvm'>
-  <name>{{ target_data.name }}</name>
-  <uuid>{{ target_data.uuid }}</uuid>
+  <name>{{ target.name }}</name>
+  <uuid>{{ target.uuid }}</uuid>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://rockylinux.org/rocky/9.0"/>
     </libosinfo:libosinfo>
   </metadata>
-  <memory unit='KiB'>{{ target_data.memory_KiB }}</memory>
-  <currentMemory unit='KiB'>{{ target_data.memory_KiB }}</currentMemory>
-  <vcpu placement='static'>{{ target_data.vcpu }}</vcpu>
+  <memory unit='KiB'>{{ target.memory_KiB }}</memory>
+  <currentMemory unit='KiB'>{{ target.memory_KiB }}</currentMemory>
+  <vcpu placement='static'>{{ target.vcpu }}</vcpu>
   <os>
     <type arch='x86_64' machine='pc-q35-rhel9.0.0'>hvm</type>
     <boot dev='hd'/>
@@ -34,7 +34,7 @@
     <emulator>/usr/libexec/qemu-kvm</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2'/>
-      <source file='{{ qcow_dir }}/{{ target_data.name }}.qcow2'/>
+      <source file='{{ qcow_dir }}/{{ target.name }}.qcow2'/>
       <target dev='vda' bus='virtio'/>
       <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
     </disk>
@@ -84,7 +84,7 @@
       <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
     </controller>
     <interface type='bridge'>
-      <mac address='{{ target_data.mac }}'/>
+      <mac address='{{ target.mac }}'/>
       <source bridge='br0'/>
       <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>

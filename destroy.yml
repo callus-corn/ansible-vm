@@ -5,9 +5,11 @@
   tasks:
 
     - name: destory develop
-      import_role:
+      include_role:
         name: vm
       vars:
         vm_action: destroy
-        target: develop
+        target: "{{ item }}"
+      loop: "{{ vm_list }}"
+      when: item.meta.label == "develop"
       tags: destroy_develop

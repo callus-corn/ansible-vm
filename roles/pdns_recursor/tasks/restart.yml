@@ -1,7 +1,0 @@
----
-
-- name: restart pdns-recursor
-  systemd:
-    name: pdns-recursor
-    state: restarted
-    enabled: yes

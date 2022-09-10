@@ -3,27 +3,27 @@
 - name: check vm_list
   command: >-
     virsh list
-  register: vm_list
+  register: virsh_list
   changed_when: false
 
 - name: destroy vm
   command: >-
-    virsh destroy {{ target }}
+    virsh destroy {{ target.name }}
   changed_when: true
-  when: target in vm_list.stdout
+  when: target.name in virsh_list.stdout
 
 - name: undefine vm
   command: >-
-    virsh undefine {{ target }}
+    virsh undefine {{ target.name }}
   changed_when: true
-  when: target in vm_list.stdout
+  when: target.name in virsh_list.stdout
 
 - name: destory qcow2
   file:
-    path: "{{ qcow_dir }}/{{ target }}.qcow2"
+    path: "{{ qcow_dir }}/{{ target.name }}.qcow2"
     state: absent
 
 - name: destory xml
   file:
-    path: "{{ xml_dir }}/{{ target }}.xml"
+    path: "{{ xml_dir }}/{{ target.name }}.xml"
     state: absent
