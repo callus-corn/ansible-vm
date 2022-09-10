@@ -8,14 +8,13 @@
 
 - name: create qcow2
   command: >-
-    cp {{ qcow_dir }}/{{ src_image }}.qcow2 {{ qcow_dir }}/{{ target.name }}.qcow2
+    cp {{ qcow_dir }}/{{ target.base_os }}.qcow2 {{ qcow_dir }}/{{ target.name }}.qcow2
   when:
     - target.name not in virsh_list.stdout
-    - src_image is defined
 
 - name: set xml
   template:
-    src: "vm.xml.j2"
+    src: "{{ target.base_os }}.xml.j2"
     dest: "{{ xml_dir }}/{{ target.name }}.xml"
     owner: root
     group: root

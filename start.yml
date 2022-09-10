@@ -9,7 +9,6 @@
         name: vm
       vars:
         vm_action: start
-        src_image: rocky9
         target: "{{ item }}"
       loop: "{{ vm_list }}"
       when: item.meta.label == "develop"
