@@ -12,11 +12,17 @@
   changed_when: true
   when: target.name in virsh_list.stdout
 
+- name: check vm_list_all
+  command: >-
+    virsh list --all
+  register: virsh_list_all
+  changed_when: false
+
 - name: undefine vm
   command: >-
     virsh undefine {{ target.name }}
   changed_when: true
-  when: target.name in virsh_list.stdout
+  when: target.name in virsh_list_all.stdout
 
 - name: destory qcow2
   file:
