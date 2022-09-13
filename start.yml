@@ -11,7 +11,9 @@
         vm_action: start
         target: "{{ item }}"
       loop: "{{ vm_list }}"
-      when: item.meta.label == "develop"
+      when:
+        - item.meta.label == "develop"
+        - item.meta.host == inventory_hostname
       tags: start_develop
 
     - name: Waits for develop
@@ -20,5 +22,7 @@
         port: 22
         delay: 10
       loop: "{{ vm_list }}"
-      when: item.meta.label == "develop"
+      when:
+        - item.meta.label == "develop"
+        - item.meta.host == inventory_hostname
       tags: health_check_develop

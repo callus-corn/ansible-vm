@@ -11,5 +11,7 @@
         vm_action: destroy
         target: "{{ item }}"
       loop: "{{ vm_list }}"
-      when: item.meta.label == "develop"
+      when:
+        - item.meta.label == "develop"
+        - item.meta.host == inventory_hostname
       tags: destroy_develop

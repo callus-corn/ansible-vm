@@ -1,4 +1,4 @@
 ---
 
-xml_dir: /mnt/local-ssd/xml
-qcow_dir: /mnt/local-ssd/image
+xml_dir: /opt/kvm/xml
+qcow_dir: /opt/kvm/image
