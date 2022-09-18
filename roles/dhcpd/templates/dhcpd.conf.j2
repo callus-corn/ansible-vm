@@ -1,0 +1,23 @@
+subnet 192.168.1.0 netmask 255.255.255.0 {
+    option broadcast-address 192.168.1.255;
+    option routers                  192.168.1.254;
+    option subnet-mask              255.255.255.0;
+    option domain-name-servers       192.168.1.100;
+    range 192.168.1.10 192.168.1.99;
+{% for hw in hw_list %}
+{% if hw.mac is defined %}
+    host {{ hw.name }} {
+      hardware ethernet {{ hw.mac }};
+      fixed-address {{ hw.ip }};
+    }
+{% endif %}
+{% endfor %}    
+{% for vm in vm_list %}
+{% if vm.mac is defined %}
+    host {{ vm.name }} {
+      hardware ethernet {{ vm.mac }};
+      fixed-address {{ vm.ip }};
+    }
+{% endif %}
+{% endfor %}
+}

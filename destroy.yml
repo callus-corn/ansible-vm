@@ -1,10 +1,10 @@
 ---
 - name: destroy vm
-  hosts: kvm
+  hosts: kvm_worker
   become: yes
   tasks:
 
-    - name: destory develop
+    - name: destory vm
       include_role:
         name: vm
       vars:
@@ -12,6 +12,6 @@
         target: "{{ item }}"
       loop: "{{ vm_list }}"
       when:
-        - item.meta.label == "develop"
+        - item.meta.label == "deploy"
         - item.meta.host == inventory_hostname
       tags: destroy_develop

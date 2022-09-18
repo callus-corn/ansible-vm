@@ -1,0 +1,14 @@
+---
+
+- name: setting dhcpd
+  import_tasks: setting.yml
+  tags: setting_dhcpd
+
+- name: force restart dhcpd
+  debug:
+    msg: force restart dhcpd
+  when: force_restart_dhcpd | default(False) | bool
+  changed_when: true
+  notify: restart_dhcpd
+  tags: restart_dhcpd
+

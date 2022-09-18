@@ -1,10 +1,26 @@
 ---
-- name: setup vm
-  hosts: kvm
+
+- name: setup kvm-controller
+  hosts: kvm_controller
   become: yes
   tasks:
 
-    - name: start develop vm
+    - name: setup dns resolver
+      import_role:
+        name: pdns_recursor
+      tags: pdns_recursor
+
+    - name: setup dhcpd
+      import_role:
+        name: dhcpd
+      tags: dhcpd
+
+- name: setup vm
+  hosts: kvm_worker
+  become: yes
+  tasks:
+
+    - name: deploy vm
       include_role:
         name: vm
       vars:
@@ -12,17 +28,17 @@
         target: "{{ item }}"
       loop: "{{ vm_list }}"
       when:
-        - item.meta.label == "develop"
+        - item.meta.label == "deploy"
         - item.meta.host == inventory_hostname
-      tags: start_develop
+      tags: start_deploy
 
-    - name: Waits for develop
+    - name: Waits for deploy
       wait_for:
         host: "{{ item.ip }}"
         port: 22
         delay: 10
       loop: "{{ vm_list }}"
       when:
-        - item.meta.label == "develop"
+        - item.meta.label == "deploy"
         - item.meta.host == inventory_hostname
       tags: health_check_develop
