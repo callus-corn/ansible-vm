@@ -1,6 +1,6 @@
 ---
 - name: destroy vm
-  hosts: kvm_worker
+  hosts: kvm
   become: yes
   tasks:
 

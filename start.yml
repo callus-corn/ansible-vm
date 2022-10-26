@@ -1,22 +1,7 @@
 ---
 
-- name: setup kvm-controller
-  hosts: kvm_controller
-  become: yes
-  tasks:
-
-    - name: setup dns resolver
-      import_role:
-        name: pdns_recursor
-      tags: pdns_recursor
-
-    - name: setup dhcpd
-      import_role:
-        name: dhcpd
-      tags: dhcpd
-
 - name: setup vm
-  hosts: kvm_worker
+  hosts: kvm
   become: yes
   tasks:
 
@@ -34,7 +19,7 @@
 
     - name: Waits for deploy
       wait_for:
-        host: "{{ item.ip }}"
+        host: "{{ (item.iface_list | first ).ip }}"
         port: 22
         delay: 10
       loop: "{{ vm_list }}"

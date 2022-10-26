@@ -1,7 +1,0 @@
----
-
-- name: restart_dhcpd
-  systemd:
-    name: dhcpd
-    state: restarted
-    enabled: yes

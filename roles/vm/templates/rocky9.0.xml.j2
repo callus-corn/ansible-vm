@@ -83,12 +83,14 @@
     <controller type='virtio-serial' index='0'>
       <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
     </controller>
+{% for iface in target.iface_list %}
     <interface type='bridge'>
-      <mac address='{{ target.mac }}'/>
+      <mac address='{{ iface.mac }}'/>
       <source bridge='br0'/>
       <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
     </interface>
+{% endfor %}
     <serial type='pty'>
       <target type='isa-serial' port='0'>
         <model name='isa-serial'/>
