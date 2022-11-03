@@ -13,7 +13,19 @@
         target: "{{ item }}"
       loop: "{{ vm_list }}"
       when:
-        - item.meta.label == "deploy"
+        - item.meta.state == "deploy"
+        - item.meta.host == inventory_hostname
+      tags: start_deploy
+
+    - name: deploy net
+      include_role:
+        name: net
+      vars:
+        net_action: start
+        target: "{{ item }}"
+      loop: "{{ vm_list }}"
+      when:
+        - item.meta.state == "deploy"
         - item.meta.host == inventory_hostname
       tags: start_deploy
 
@@ -24,6 +36,6 @@
         delay: 10
       loop: "{{ vm_list }}"
       when:
-        - item.meta.label == "deploy"
+        - item.meta.state == "deploy"
         - item.meta.host == inventory_hostname
       tags: health_check_develop

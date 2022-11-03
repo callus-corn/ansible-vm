@@ -1,0 +1,9 @@
+---
+
+- name: destroy switch port
+  command: >-
+    ovn-nbctl --db={{ ovn_nb_db }}
+    --if-exists
+    lsp-del
+    {{ item.ovs_id }}
+  loop: "{{ target.iface_list }}"

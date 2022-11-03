@@ -1,0 +1,4 @@
+---
+
+- name: import {{ net_action }}.yml
+  import_tasks: "{{ net_action }}.yml"

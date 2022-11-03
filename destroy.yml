@@ -4,6 +4,18 @@
   become: yes
   tasks:
 
+    - name: destory net
+      include_role:
+        name: net
+      vars:
+        net_action: destroy
+        target: "{{ item }}"
+      loop: "{{ vm_list }}"
+      when:
+        - item.meta.state == "deploy"
+        - item.meta.host == inventory_hostname
+      tags: destroy_develop
+
     - name: destory vm
       include_role:
         name: vm
@@ -12,6 +24,6 @@
         target: "{{ item }}"
       loop: "{{ vm_list }}"
       when:
-        - item.meta.label == "deploy"
+        - item.meta.state == "deploy"
         - item.meta.host == inventory_hostname
       tags: destroy_develop
