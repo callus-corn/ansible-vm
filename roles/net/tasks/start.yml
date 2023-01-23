@@ -5,7 +5,7 @@
     ovn-nbctl --db={{ ovn_nb_db }}
     --may-exist
     lsp-add
-    {{ item.connect_switch }}
+    {{ item.ovn_switch }}
     {{ item.ovs_id }}
   loop: "{{ target.iface_list }}"
 
@@ -15,4 +15,15 @@
     lsp-set-addresses
     {{ item.ovs_id }}
     {{ item.mac }}
+  loop: "{{ target.iface_list }}"
+
+- name: set ip
+  command: >-
+    ovn-nbctl --db={{ ovn_nb_db }}
+    --may-exist
+    lr-nat-add
+    {{ item.ovn_router }}
+    dnat
+    {{ item.ip }}
+    {{ item.ip }}
   loop: "{{ target.iface_list }}"

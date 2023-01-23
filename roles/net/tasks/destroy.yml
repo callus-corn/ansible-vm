@@ -1,5 +1,15 @@
 ---
 
+- name: delete ip
+  command: >-
+    ovn-nbctl --db={{ ovn_nb_db }}
+    --if-exist
+    lr-nat-del
+    {{ item.ovn_router }}
+    dnat
+    {{ item.ip }}
+  loop: "{{ target.iface_list }}"
+
 - name: destroy switch port
   command: >-
     ovn-nbctl --db={{ ovn_nb_db }}
