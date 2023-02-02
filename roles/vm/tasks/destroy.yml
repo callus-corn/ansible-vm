@@ -1,5 +1,9 @@
 ---
 
+- name: set search_string
+  set_fact:
+    search_string: "{{ ' ' ~ target.name ~ ' ' }}"
+
 - name: check vm_list
   command: >-
     virsh list
@@ -10,7 +14,7 @@
   command: >-
     virsh destroy {{ target.name }}
   changed_when: true
-  when: target.name in virsh_list.stdout
+  when: search_string in virsh_list.stdout
 
 - name: check vm_list_all
   command: >-
@@ -22,7 +26,7 @@
   command: >-
     virsh undefine {{ target.name }}
   changed_when: true
-  when: target.name in virsh_list_all.stdout
+  when: search_string in virsh_list_all.stdout
 
 - name: destory qcow2
   file:
