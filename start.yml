@@ -27,6 +27,7 @@
       when:
         - item.meta.state == "deploy"
         - item.meta.host == inventory_hostname
+        - item.meta.sdn is defined
       tags: start_deploy
 
     - name: Waits for deploy
