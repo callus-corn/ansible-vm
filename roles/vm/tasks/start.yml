@@ -10,33 +10,20 @@
   register: virsh_list
   changed_when: false
 
-- name: create qcow2 from {{ target.base_os }}.qcow2
-  command: >-
-    cp {{ qcow_dir }}/{{ target.base_os }}.qcow2 {{ qcow_dir }}/{{ target.name }}.qcow2
-  when:
-    - search_string not in virsh_list.stdout
-    - target.resized_volume is not defined
-
 - name: create empty qcow2
   command: >-
-    qemu-img create -f qcow2 -o preallocation=metadata {{ qcow_dir }}/{{ target.name }}.qcow2 {{ target.resized_volume.disk_size }}
+    qemu-img create -f qcow2 -o preallocation=metadata {{ qcow_dir }}/{{ target.name }}.qcow2 {{ target.volume }}
   when:
     - search_string not in virsh_list.stdout
-    - target.resized_volume is defined
 
 - name: create resized qcow2
   command: >-
     virt-resize
-    {% if target.resized_volume.expand_partition is defined %}
-    --expand {{ target.resized_volume.expand_partition }}
-    {% endif %}
-    {% if target.resized_volume.expand_lv is defined %}
-    --LV-expand {{ target.resized_volume.expand_lv }}
-    {% endif %}
+    --expand {{ image_dict[target.base_os].expand_partition }}
+    --LV-expand {{ image_dict[target.base_os].expand_lv }}
     {{ qcow_dir }}/{{ target.base_os }}.qcow2 {{ qcow_dir }}/{{ target.name }}.qcow2
   when:
     - search_string not in virsh_list.stdout
-    - target.resized_volume is defined
 
 - name: set xml
   template:

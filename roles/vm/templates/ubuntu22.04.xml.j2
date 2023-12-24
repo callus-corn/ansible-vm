@@ -1,9 +1,9 @@
 <domain type='kvm' id='2'>
   <name>{{ target.name }}</name>
   <uuid>{{ target.uuid }}</uuid>
-  <memory unit='KiB'>{{ target.memory_KiB }}</memory>
-  <currentMemory unit='KiB'>{{ target.memory_KiB }}</currentMemory>
-  <vcpu placement='static'>{{ target.vcpu }}</vcpu>
+  <memory unit='KiB'>{{ flavor_dict[target.flavor].memory_KiB }}</memory>
+  <currentMemory unit='KiB'>{{ flavor_dict[target.flavor].memory_KiB }}</currentMemory>
+  <vcpu placement='static'>{{ flavor_dict[target.flavor].vcpu }}</vcpu>
   <resource>
     <partition>/machine</partition>
   </resource>

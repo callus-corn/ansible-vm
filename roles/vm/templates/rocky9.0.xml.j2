@@ -6,9 +6,9 @@
       <libosinfo:os id="http://rockylinux.org/rocky/9.0"/>
     </libosinfo:libosinfo>
   </metadata>
-  <memory unit='KiB'>{{ target.memory_KiB }}</memory>
-  <currentMemory unit='KiB'>{{ target.memory_KiB }}</currentMemory>
-  <vcpu placement='static'>{{ target.vcpu }}</vcpu>
+  <memory unit='KiB'>{{ flavor_dict[target.flavor].memory_KiB }}</memory>
+  <currentMemory unit='KiB'>{{ flavor_dict[target.flavor].memory_KiB }}</currentMemory>
+  <vcpu placement='static'>{{ flavor_dict[target.flavor].vcpu }}</vcpu>
   <os>
     <type arch='x86_64' machine='pc-q35-rhel9.0.0'>hvm</type>
     <boot dev='hd'/>
