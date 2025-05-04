@@ -1,15 +1,33 @@
 ---
 
-- name: setup vm
+- name: install vm dependencies
   hosts: kvm
   become: yes
   tasks:
 
-    - name: dnf update
-      dnf:
+    - name: repo update
+      ansible.builtin.package:
         name: '*'
         state: latest
-      when: ansible_os_family == "RedHat"
+      when: kvm_install is defined
+
+    - name: install packages
+      ansible.builtin.package:
+        name:
+          - qemu-kvm
+          - libvirt-daemon-system
+          - libvirt-clients
+          - virtinst
+          - bridge-utils
+          - libosinfo-bin
+          - guestfs-tools
+        state: latest
+      when: kvm_install is defined
+
+- name: setup vm
+  hosts: kvm
+  become: yes
+  tasks:
 
     - name: deploy vm
       include_role:
